@@ -1,10 +1,6 @@
 // Test ID: IIDSAT
 
-import {
-  calcMinutesLeft,
-  formatCurrency,
-  formatDate,
-} from "../../utils/helpers";
+import { calcMinutesLeft, formatCurrency, formatDate } from "../../utils/helpers";
 
 const order = {
   id: "ABCDEF",
@@ -12,6 +8,7 @@ const order = {
   phone: "123456789",
   address: "Arroios, Lisbon , Portugal",
   priority: true,
+  status: "preparing",
   estimatedDelivery: "2027-04-25T10:00:00",
   cart: [
     {
@@ -43,21 +40,15 @@ const order = {
 
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const {
-    id,
-    status,
-    priority,
-    priorityPrice,
-    orderPrice,
-    estimatedDelivery,
-    cart,
-  } = order;
+  const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery, cart } =
+    order;
+
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
     <div>
       <div>
-        <h2>Status</h2>
+        <h2>Order #{id} status</h2>
 
         <div>
           {priority && <span>Priority</span>}
@@ -68,11 +59,22 @@ function Order() {
       <div>
         <p>
           {deliveryIn >= 0
-            ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
+            ? `Only ${deliveryIn} minutes left 😃`
             : "Order should have arrived"}
         </p>
         <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
       </div>
+
+      <ul>
+        {cart.map((item) => (
+          <li key={item.pizzaId}>
+            <p>
+              {item.quantity}&times; {item.name}
+            </p>
+            <p>{formatCurrency(item.totalPrice)}</p>
+          </li>
+        ))}
+      </ul>
 
       <div>
         <p>Price pizza: {formatCurrency(orderPrice)}</p>

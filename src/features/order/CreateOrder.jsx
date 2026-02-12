@@ -1,10 +1,10 @@
-import { useState } from "react";
-
-// https://uibakery.io/regex-library/phone-number
-const isValidPhone = (str) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
-  );
+// import { useState } from "react";
+//
+// // https://uibakery.io/regex-library/phone-number
+// const isValidPhone = (str) =>
+//   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
+//     str
+//   );
 
 const fakeCart = [
   {
@@ -32,11 +32,12 @@ const fakeCart = [
 
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
+  // const cart = fakeCart;
+  const totalItems = fakeCart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div>
-      <h2>Ready to order? Let's go!</h2>
+      <h2>Ready to order? Let&apos;s go!</h2>
 
       <form>
         <div>
@@ -70,7 +71,7 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button>Order now</button>
+          <button>Order {totalItems > 0 ? `${totalItems} pizzas now` : "now"}</button>
         </div>
       </form>
     </div>
