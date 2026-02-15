@@ -1,8 +1,11 @@
+import PropTypes from "prop-types";
+import { formatCurrency } from "../../utils/helpers";
+
 function CartItem({ item }) {
-  const { pizzaId, name, quantity, totalPrice } = item;
+  const { name, quantity, totalPrice } = item;
 
   return (
-    <li>
+    <li className="flex items-center justify-between py-3 text-sm">
       <p>
         {quantity}&times; {name}
       </p>
@@ -12,5 +15,13 @@ function CartItem({ item }) {
     </li>
   );
 }
+
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired,
+    totalPrice: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default CartItem;

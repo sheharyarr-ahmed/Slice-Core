@@ -7,8 +7,20 @@ function SearchOrder() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!query) return;
-    navigate(`/order/${query}`);
+    const value = query.trim();
+    if (!value) return;
+
+    const normalized = value.toLowerCase();
+    if (normalized === "cart" || normalized === "/cart") {
+      navigate("/cart");
+    } else if (normalized === "menu" || normalized === "/menu") {
+      navigate("/menu");
+    } else if (normalized === "home" || normalized === "/") {
+      navigate("/");
+    } else {
+      navigate(`/order/${value}`);
+    }
+
     setQuery("");
   }
 
